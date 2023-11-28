@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +26,12 @@ public class FuncionarioService {
     }
 
     @Transactional
-    public void alterarFuncionario(FuncionarioDTO funcionarioAlterado) {
-        salvarAlteracoesFuncionario(funcionarioAlterado);
+    public void alterarFuncionario(Long id, FuncionarioDTO funcionarioAlterado) {
+        salvarAlteracoesFuncionario(id, funcionarioAlterado);
     }
 
-    private void salvarAlteracoesFuncionario(FuncionarioDTO funcionarioAlterado) {
-        Optional<FuncionarioEntity> funcionarioNaBase = funcionarioRepository.findById(funcionarioAlterado.getId());
+    private void salvarAlteracoesFuncionario(Long id, FuncionarioDTO funcionarioAlterado) {
+        Optional<FuncionarioEntity> funcionarioNaBase = funcionarioRepository.findById(id);
         if (funcionarioNaBase.isPresent()) {
             FuncionarioEntity funcionario = funcionarioNaBase.get();
             funcionario.setEmail(funcionarioAlterado.getEmail());
@@ -51,19 +52,11 @@ public class FuncionarioService {
         funcionarioRepository.deleteById(id);
     }
 
-    public Optional<FuncionarioDTO> buscarFuncionario(Long id) {
-        Optional<FuncionarioEntity> funcionario = funcionarioRepository.findById(id);
-        return retornaFuncionario(funcionario);
-    }
+    public FuncionarioDTO buscarFuncionario(Long id) {
+        FuncionarioEntity funcionarioEntity = funcionarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(""));
 
-    private static Optional<FuncionarioDTO> retornaFuncionario(Optional<FuncionarioEntity> funcionario) {
-        if (funcionario.isPresent()) {
-            FuncionarioEntity funcionarioEntity = funcionario.get();
-            FuncionarioDTO funcionarioDTO = FuncionarioDTO.toDTO(funcionarioEntity);
-            return Optional.of(funcionarioDTO);
-        } else {
-            return Optional.empty();
-        }
+        return FuncionarioDTO.toDTO(funcionarioEntity);
     }
 
     public List<FuncionarioDTO> buscarTodosFuncionarios() {
@@ -73,12 +66,11 @@ public class FuncionarioService {
         return funcionariosDTO;
     }
 
-    private static void converterListaFuncionarios(List<FuncionarioEntity> funcionarios, List<FuncionarioDTO> funcionariosDTO) {
+    private void converterListaFuncionarios(List<FuncionarioEntity> funcionarios, List<FuncionarioDTO> funcionariosDTO) {
         for (FuncionarioEntity funcionarioEntity : funcionarios) {
             FuncionarioDTO funcionarioDTO = FuncionarioDTO.toDTO(funcionarioEntity);
             funcionariosDTO.add(funcionarioDTO);
         }
     }
-
 
 }
