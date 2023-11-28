@@ -1,14 +1,12 @@
 package br.com.rhsystem.controller;
 
 import br.com.rhsystem.dto.FuncionarioDTO;
-import br.com.rhsystem.entity.FuncionarioEntity;
 import br.com.rhsystem.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -24,22 +22,22 @@ public class FuncionarioController {
         funcionarioService.incluirFuncionario(funcionario);
     }
 
-    @PostMapping("/alterar")
-    public void alterarFuncionario(@RequestBody FuncionarioDTO funcionarioAlterado) {
-        funcionarioService.alterarFuncionario(funcionarioAlterado);
+    @PutMapping("/{id}")
+    public void alterarFuncionario(@PathVariable Long id, @RequestBody FuncionarioDTO funcionarioAlterado) {
+        funcionarioService.alterarFuncionario(id, funcionarioAlterado);
     }
 
-    @DeleteMapping("/excluir/{id}")
+    @DeleteMapping("/{id}")
     public void excluirFuncionario(@PathVariable Long id) {
         funcionarioService.excluirFuncionario(id);
     }
 
     @GetMapping("/{id}")
-    public Optional<FuncionarioDTO> buscarFuncionario(@PathVariable Long id) {
+    public FuncionarioDTO buscarFuncionario(@PathVariable Long id) {
         return funcionarioService.buscarFuncionario(id);
     }
 
-    @GetMapping("/buscar-todos")
+    @GetMapping
     public List<FuncionarioDTO> buscarTodosFuncionarios() {
         return funcionarioService.buscarTodosFuncionarios();
     }

@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Data
 public class FuncionarioDTO {
 
-    private Long id;
     private String nome;
     private String cpf;
     private String email;
