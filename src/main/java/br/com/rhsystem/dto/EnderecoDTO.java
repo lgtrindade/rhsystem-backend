@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Endereco {
+public class EnderecoDTO {
     private String logradouro;
     private Long numero;
     private String complemento;
     private String bairro;
     private String cep;
-    private Cidade cidade;
+    private CidadeDTO cidade;
 }

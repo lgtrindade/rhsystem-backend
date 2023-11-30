@@ -23,7 +23,10 @@
             <column name="numero" type="INT"/>
             <column name="cep" type="VARCHAR(255)"/>
             <column name="estado" type="VARCHAR(255)"/>
+            <column name="estado_id" type="INT"/>
             <column name="cidade" type="VARCHAR(255)"/>
+            <column name="cidade_id" type="INT"/>
+
         </createTable>
     </changeSet>
 </databaseChangeLog>

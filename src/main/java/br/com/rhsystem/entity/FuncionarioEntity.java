@@ -55,8 +55,14 @@ public class FuncionarioEntity {
     @Column(name = "estado")
     private String estado;
 
+    @Column(name = "estado_id")
+    private Long estadoId;
+
     @Column(name = "cidade")
     private String cidade;
+
+    @Column(name = "cidade_id")
+    private Long cidadeId;
 
 
     public static FuncionarioEntity toEntity(FuncionarioDTO funcionarioDTO) {
@@ -74,7 +80,9 @@ public class FuncionarioEntity {
         funcionarioEntity.setBairro(funcionarioDTO.getEndereco().getBairro());
         funcionarioEntity.setCep(funcionarioDTO.getEndereco().getCep());
         funcionarioEntity.setEstado(funcionarioDTO.getEndereco().getCidade().getEstado().getNome());
+        funcionarioEntity.setEstadoId(funcionarioDTO.getEndereco().getCidade().getEstado().getId());
         funcionarioEntity.setCidade(funcionarioDTO.getEndereco().getCidade().getNome());
+        funcionarioEntity.setCidadeId(funcionarioDTO.getEndereco().getCidade().getId());
         return funcionarioEntity;
     }
 

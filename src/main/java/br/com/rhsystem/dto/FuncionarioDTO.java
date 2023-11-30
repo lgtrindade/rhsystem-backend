@@ -3,6 +3,7 @@ package br.com.rhsystem.dto;
 import br.com.rhsystem.entity.FuncionarioEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -16,9 +17,8 @@ public class FuncionarioDTO {
     private String telefone;
     private String cargo;
     private String departamento;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataContratacao;
-    private Endereco endereco;
+    private EnderecoDTO endereco;
 
     public static FuncionarioDTO toDTO(FuncionarioEntity funcionarioEntity) {
         FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
@@ -30,14 +30,16 @@ public class FuncionarioDTO {
         funcionarioDTO.setCargo(funcionarioEntity.getCargo());
         funcionarioDTO.setDepartamento(funcionarioEntity.getDepartamento());
         funcionarioDTO.setDataContratacao(funcionarioEntity.getDataContratacao());
-        Estado estado = Estado.builder()
+        EstadoDTO estado = EstadoDTO.builder()
+                .id(funcionarioEntity.getEstadoId())
                 .nome(funcionarioEntity.getEstado())
                 .build();
-        Cidade cidade = Cidade.builder()
+        CidadeDTO cidade = CidadeDTO.builder()
+                .id(funcionarioEntity.getCidadeId())
                 .nome(funcionarioEntity.getCidade())
                 .estado(estado)
                 .build();
-        Endereco endereco = Endereco.builder()
+        EnderecoDTO endereco = EnderecoDTO.builder()
                 .logradouro(funcionarioEntity.getEndereco())
                 .complemento(funcionarioEntity.getComplemento())
                 .bairro(funcionarioEntity.getBairro())

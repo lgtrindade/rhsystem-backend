@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Estado {
+public class CidadeDTO {
     private Long id;
     private String nome;
+    private EstadoDTO estado;
 }
